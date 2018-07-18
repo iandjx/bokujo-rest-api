@@ -43,16 +43,25 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *,cover
+.hypothesis/
 
 # Translations
 *.mo
 *.pot
 
-# Django stuff:
-*.log
+# Flask stuff:
+instance/
+.webassets-cache
 
-# Sphinx documentation
-docs/_build/
+# pyenv
+.python-version
 
-# PyBuilder
-target/
+# dotenv
+.env
+
+# virtualenv
+venv/
+ENV/
+
+# Editors
+.idea/
