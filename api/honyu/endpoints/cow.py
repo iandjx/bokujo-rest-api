@@ -1,27 +1,35 @@
 from flask_restplus import Api, Resource, fields
 from flask_restplus import api, reqparse
 from models.cowmodel import CowModel
+from api.restplus import api
 
-api = Api()
-ns = api.namespace('cow', description='Operations related to blog categories')
+ns = api.namespace('cows', description='TODO operations')
 
 cow = api.model('Cow', {
     'pub_id': fields.String(readOnly=True, description='Government ID'),
-    'private_id': fields.String(required=True, description='Bokojo ID'),
+    'private_id': fields.String(required=True, description='Bokujo ID'),
 })
-
 
 @ns.route('/')
 class Cow(Resource):
-    parser = reqparse.RequestParser()
-
-    @api.marshal_list_with(cow)
+    '''Shows all cows in he farm'''
+    @ns.doc('list_cows')
+    @ns.marshal_list_with(cow)
     def get(self):
-        return {'cows': [cow.json() for x in CowModel.query.all()]}
+        '''List all tasks'''
+        cows = CowModel.query.all()
+        return cows
 
-    @api.expect(cow)
+    @ns.doc('create_cow')
+    @ns.expect(cow)
+    @ns.marshal_with(cow, code=201)
     def post(self):
-        data = Cow.parser.parse_args()
-        x = CowModel(**data)
-        x.save_to_db()
-        return x.json(), 201
+        '''Create a new task'''
+        data = api.payload
+        cow = CowModel(data['pub_id'], data['private_id'])
+        try:
+            cow.save_to_db()
+        except:
+            return {"message": "An error occurred inserting the cow."}, 500
+
+        return cow.json(), 201
