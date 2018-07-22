@@ -1,9 +1,8 @@
 from flask import Flask, Blueprint
-from flask_restplus import Api, Resource, fields, reqparse
 from werkzeug.contrib.fixers import ProxyFix
 from flask_sqlalchemy import SQLAlchemy
 from api.restplus import api
-from api.honyu.endpoints.cow import ns as cow_namespace
+from api.endpoints.cow import ns as cow_namespace
 
 db = SQLAlchemy()
 app = Flask(__name__)
