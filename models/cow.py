@@ -1,5 +1,4 @@
 from db import db
-from models.enums import heredityenum
 
 class CowModel(db.Model):
 
@@ -8,6 +7,8 @@ class CowModel(db.Model):
     pub_id = db.Column(db.String(20))
     private_id = db.Column(db.String(10))
     heredity = db.Column(db.String(10))
+
+    vaccines_given = db.relationship('VaccineModel', lazy='dynamic')
 
     def __init__(self, pub_id, private_id, heredity):
         self.pub_id = pub_id

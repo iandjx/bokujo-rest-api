@@ -1,6 +1,6 @@
 from flask_restplus import Resource
 from api.restplus import api
-from api.core.serializers import cow
+from api.core.serializers import cow, cow_with_vaccine
 from flask import request
 from api.core.business import create_cow, find_cow
 from api.core.parsers import heredity_arguments
@@ -13,7 +13,7 @@ class Cow(Resource):
     '''Shows all cows in he farm'''
     @ns.doc('list_cows')
     @api.expect(heredity_arguments)
-    @ns.marshal_list_with(cow)
+    @ns.marshal_list_with(cow_with_vaccine)
     def get(self):
         '''List all cows'''
         args = heredity_arguments.parse_args(request)

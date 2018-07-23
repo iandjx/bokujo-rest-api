@@ -3,6 +3,7 @@ from werkzeug.contrib.fixers import ProxyFix
 from flask_sqlalchemy import SQLAlchemy
 from api.restplus import api
 from api.endpoints.cow import ns as cow_namespace
+from api.endpoints.vaccine import ns as vaccine_namespace
 
 db = SQLAlchemy()
 app = Flask(__name__)
@@ -14,6 +15,7 @@ app.wsgi_app = ProxyFix(app.wsgi_app)
 blueprint = Blueprint('api', __name__, url_prefix='/api')
 api.init_app(blueprint)
 api.add_namespace(cow_namespace)
+api.add_namespace(vaccine_namespace)
 app.register_blueprint(blueprint)
 
 
