@@ -4,13 +4,13 @@ from api.core.serializers import vaccine
 from flask import request
 from api.core.business import find_vaccine,give_vaccine
 
-ns = api.namespace('vaccines', description='Cow Operations')
+ns = api.namespace('artifical_insemination', description='Artificial Insemination')
 
 
 @ns.route('/')
-class Vaccine(Resource):
+class ArtificialInsemination(Resource):
     '''Shows all vaccines'''
-    @ns.doc('list_vaccine')
+    @ns.doc('list_AIs')
     @ns.marshal_with(vaccine)
     def get(self):
         '''List all vaccines given'''

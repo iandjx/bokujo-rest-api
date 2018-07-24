@@ -10,8 +10,8 @@ class VaccineModel(db.Model):
     date_given = db.Column(db.DateTime)
 
     cow_id = db.Column(db.Integer, db.ForeignKey('cow.id'))
-    cow = db.relationship('CowModel')
-
+    #cow = db.relationship('CowModel', backref=db.backref('vaccines', lazy='dynamic'))
+    # cow = db.relationship('CowModel', back_populates='vaccines')
     def __init__(self, vaccine_name, cow_id, date_given=None):
         self.vaccine_name = vaccine_name
         if date_given is None:

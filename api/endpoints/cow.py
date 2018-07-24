@@ -13,7 +13,7 @@ class Cow(Resource):
     '''Shows all cows in he farm'''
     @ns.doc('list_cows')
     @api.expect(heredity_arguments)
-    @ns.marshal_list_with(cow_with_vaccine)
+    @ns.marshal_with(cow_with_vaccine)
     def get(self):
         '''List all cows'''
         args = heredity_arguments.parse_args(request)

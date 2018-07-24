@@ -27,7 +27,8 @@ def give_vaccine(data):
     cow_id = data.get('cow_id')
     print(data)
     vaccine = VaccineModel(vaccine_name, cow_id)
-    print(vaccine)
+    cow = CowModel.query.filter(CowModel.id == cow_id).one()
+    print(cow)
     db.session.add(vaccine)
     db.session.commit()
 

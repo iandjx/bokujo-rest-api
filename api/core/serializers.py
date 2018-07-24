@@ -2,19 +2,21 @@ from flask_restplus import fields
 from api.restplus import api
 
 vaccine = api.model('Vaccine', {
-    'vaccine_name': fields.String(readOnly=True, description='Vaccine Name'),
+    'id': fields.Integer(readOnly=True, description='The unique identifier of a vaccine given'),
+    'vaccine_name': fields.String(required=True, description='Vaccine Name'),
     'date_given': fields.DateTime,
-    'cow_id': fields.Integer,
+    'cow_id': fields.Integer(attribute='cow.id'),
 })
 
 cow = api.model('Cow Make', {
-    'pub_id': fields.String(readOnly=True, description='Government ID'),
+    'id': fields.Integer(readOnly=True, description='The unique identifier of a cowy'),
+    'pub_id': fields.String(required=True, description='Government ID'),
     'private_id': fields.String(required=True, description='Bokujo ID'),
     'heredity': fields.String(required=True, description='Heredity of Cow'),
 })
 
 cow_with_vaccine = api.inherit('Cow with vaccinations', cow, {
-    'vaccinations': fields.List(fields.Nested(vaccine))
+    'vaccines': fields.List(fields.Nested(vaccine))
 })
 
 
