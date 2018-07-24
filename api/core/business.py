@@ -3,6 +3,7 @@
 from db import db
 from models.cow import CowModel
 from models.vaccine import VaccineModel
+from models.artificialinsemination import ArtificialInseminationModel
 
 
 def create_cow(data):
@@ -25,10 +26,8 @@ def give_vaccine(data):
     vaccine_name = data.get('vaccine_name')
     # date_given = data.get('date_given')
     cow_id = data.get('cow_id')
-    print(data)
     vaccine = VaccineModel(vaccine_name, cow_id)
     cow = CowModel.query.filter(CowModel.id == cow_id).one()
-    print(cow)
     db.session.add(vaccine)
     db.session.commit()
 
@@ -36,3 +35,14 @@ def give_vaccine(data):
 def find_vaccine():
     return VaccineModel.query.all()
 
+
+def find_artificial_insemination():
+    return ArtificialInseminationModel.query.all()
+
+def inseminate_cow(data):
+    semen = data.get('semen')
+    cow_id = data.get('cow_id')
+    artificial_insemination = ArtificialInseminationModel(semen, cow_id)
+    cow = CowModel.query.filter(CowModel.id == cow_id).one()
+    db.session.add(artificial_insemination)
+    db.session.commit()

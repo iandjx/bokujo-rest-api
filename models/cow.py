@@ -12,6 +12,7 @@ class CowModel(db.Model):
     # vaccines_given = db.relationship('VaccineModel', lazy='dynamic') this necessitates explicit queries to link 2 tables
     # vaccines = db.relationship('VaccineModel', back_populates='cow') similar to backref but requires backpopulates also in vaccinemodel
     vaccines = db.relationship('VaccineModel', backref='cow')
+    artificial_inseminations = db.relationship('ArtificialInseminationModel', backref='cow')
 
     def __init__(self, pub_id, private_id, heredity):
         self.pub_id = pub_id

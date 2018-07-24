@@ -8,6 +8,13 @@ vaccine = api.model('Vaccine', {
     'cow_id': fields.Integer(attribute='cow.id'),
 })
 
+artificial_insemination = api.model('Artificial Insemination', {
+    'id': fields.Integer(readOnly=True, description='The unique identifier of the artificial insemination event'),
+    'semen': fields.String(required=True, description='Semen used'),
+    'date_given': fields.DateTime,
+    'cow_id': fields.Integer(attribute='cow.id'),
+})
+
 cow = api.model('Cow Make', {
     'id': fields.Integer(readOnly=True, description='The unique identifier of a cowy'),
     'pub_id': fields.String(required=True, description='Government ID'),
@@ -16,7 +23,11 @@ cow = api.model('Cow Make', {
 })
 
 cow_with_vaccine = api.inherit('Cow with vaccinations', cow, {
-    'vaccines': fields.List(fields.Nested(vaccine))
+    'vaccines': fields.List(fields.Nested(vaccine)),
+    'artificial_inseminations': fields.Nested(artificial_insemination),
+})
+cow_inseminated = api.inherit('Cow inseminations', cow, {
+    'artificial_inseminations': fields.Nested(artificial_insemination)
 })
 
 
