@@ -24,12 +24,16 @@ cow = api.model('Cow Make', {
 
 cow_with_vaccine = api.inherit('Cow with vaccinations', cow, {
     'vaccines': fields.List(fields.Nested(vaccine)),
-    'artificial_inseminations': fields.Nested(artificial_insemination),
+    'artificial_inseminations': fields.List(fields.Nested(artificial_insemination)),
 })
 cow_inseminated = api.inherit('Cow inseminations', cow, {
     'artificial_inseminations': fields.Nested(artificial_insemination)
 })
 
+test = api.model('Test', {
+    'id': fields.Integer(readOnly=True),
+    'name': fields.String(required=True)
+})
 
 
 

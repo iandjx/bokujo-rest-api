@@ -9,7 +9,7 @@ ns = api.namespace('cows', description='Cow Operations')
 
 
 @ns.route('/')
-class Cow(Resource):
+class Cows(Resource):
     '''Shows all cows in he farm'''
     @ns.doc('list_cows')
     @api.expect(heredity_arguments)
@@ -27,5 +27,12 @@ class Cow(Resource):
         create_cow(request.json)
 
         return request.json, 201
+
+
+@ns.route('/{id}')
+class Cow(Resource):
+    pass
+
+
 
 
