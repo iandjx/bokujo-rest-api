@@ -27,4 +27,4 @@ class CowModel(db.Model):
 
     @classmethod
     def find_by_private_id(cls, private_id):
-        return cls.query.filter_by(id=private_id).first()
+        return cls.query.filter_by(private_id=private_id).first()

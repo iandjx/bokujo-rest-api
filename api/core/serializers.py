@@ -20,6 +20,9 @@ cow = api.model('Cow Make', {
     'pub_id': fields.String(required=True, description='Government ID'),
     'private_id': fields.String(required=True, description='Bokujo ID'),
     'heredity': fields.String(required=True, description='Heredity of Cow'),
+    'vaccines': fields.List(fields.Nested(vaccine)),
+    'artificial_inseminations': fields.List(fields.Nested(artificial_insemination)),
+
 })
 
 cow_with_vaccine = api.inherit('Cow with vaccinations', cow, {

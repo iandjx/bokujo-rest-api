@@ -4,6 +4,7 @@ from api.core.serializers import cow, cow_with_vaccine
 from flask import request
 from api.core.business import create_cow, find_cow
 from api.core.parsers import heredity_arguments
+from models.cow import CowModel
 
 ns = api.namespace('cows', description='Cow Operations')
 
@@ -29,9 +30,13 @@ class Cows(Resource):
         return request.json, 201
 
 
-@ns.route('/{id}')
+@ns.route('/<string:private_id>')
 class Cow(Resource):
-    pass
+    @ns.doc('individual_cow_data')
+    @ns.marshal_with(cow)
+    def get(self, private_id):
+        return CowModel.find_by_private_id(private_id)
+
 
 
 

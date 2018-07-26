@@ -39,6 +39,7 @@ def find_vaccine():
 def find_artificial_insemination():
     return ArtificialInseminationModel.query.all()
 
+
 def inseminate_cow(data):
     semen = data.get('semen')
     cow_id = data.get('cow_id')
@@ -46,3 +47,4 @@ def inseminate_cow(data):
     cow = CowModel.query.filter(CowModel.id == cow_id).one()
     db.session.add(artificial_insemination)
     db.session.commit()
+
