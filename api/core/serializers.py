@@ -15,8 +15,14 @@ artificial_insemination = api.model('Artificial Insemination', {
     'cow_id': fields.Integer(attribute='cow.id'),
 })
 
+basic_cow = api.model('Basic Cow Data',{
+    'id': fields.Integer(readOnly=True, description='The unique identifier of a cow'),
+    'pub_id': fields.String(required=True, description='Government ID'),
+    'private_id': fields.String(required=True, description='Bokujo ID'),
+    'heredity': fields.String(required=True, description='Heredity of Cow'),
+})
 cow = api.model('Cow Make', {
-    'id': fields.Integer(readOnly=True, description='The unique identifier of a cowy'),
+    'id': fields.Integer(readOnly=True, description='The unique identifier of a cow'),
     'pub_id': fields.String(required=True, description='Government ID'),
     'private_id': fields.String(required=True, description='Bokujo ID'),
     'heredity': fields.String(required=True, description='Heredity of Cow'),
@@ -38,6 +44,10 @@ test = api.model('Test', {
     'name': fields.String(required=True)
 })
 
+user = api.model('User', {
+    'username': fields.String(required=True),
+    'password': fields.String(required=True)
+})
 
 
 #

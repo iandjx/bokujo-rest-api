@@ -6,6 +6,7 @@ from models.test import TestModel
 
 ns = api.namespace('test', description='test')
 
+
 @ns.route('/<string:name>')
 class Test(Resource):
     @ns.doc('list Tests')
