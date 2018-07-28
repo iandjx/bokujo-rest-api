@@ -1,4 +1,4 @@
-flask-restplus==0.11.0
-Flask-SQLAlchemy==2.1
+Flask-SQLAlchemy
 werkzeug
 flask_jwt_extended
+Flask-RESTful
