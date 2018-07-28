@@ -1,28 +1,27 @@
-from flask_restplus import Resource
-from api.restplus import api
-from api.core.serializers import vaccine
-from flask import request
-from api.core.business import find_vaccine,give_vaccine
+from models.vaccine import VaccineModel
+from flask_restful import Resource, reqparse
+from models.cow import CowModel
 
-ns = api.namespace('vaccines', description='Cow Operations')
-
-
-@ns.route('/')
 class Vaccine(Resource):
-    '''Shows all vaccines'''
-    @ns.doc('list_vaccine')
-    @ns.marshal_with(vaccine)
-    def get(self):
-        '''List all vaccines given'''
-        return find_vaccine()
+    parser = reqparse.RequestParser()
+    parser.add_argument('vaccine_name',
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank."
+                        )
+    parser.add_argument('date_given',
+                        type=int,
+                        required=True,
+                        help="This field cannot be left blank."
+                        )
 
-    @ns.doc('give_vaccine')
-    @ns.expect(vaccine)
-    @ns.marshal_with(vaccine, code=201)
-    def post(self):
-        '''Create a new cow'''
-        give_vaccine(request.json)
+    def post(self, private_id):
+        data = Vaccine.parser.parse_args()
+        cow = CowModel.find_by_private_id(private_id)
+        vaccine = VaccineModel(**data, cow_id=cow.id)
+        return vaccine.json()
 
-        return request.json, 201
+
+
 
 

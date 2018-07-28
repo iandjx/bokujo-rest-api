@@ -9,10 +9,10 @@ class CowModel(db.Model):
     private_id = db.Column(db.String(10))
     heredity = db.Column(db.String(10))
 
-    # vaccines = db.relationship('VaccineModel', backref='cow')
+    vaccines = db.relationship('VaccineModel', backref='cow')
     # artificial_inseminations = db.relationship('ArtificialInseminationModel', backref='cow')
 
-    # vaccines_given = db.relationship('VaccineModel', lazy='dynamic') this necessitates explicit queries to link 2 tables
+    # vaccines = db.relationship('VaccineModel', lazy='dynamic') #this necessitates explicit queries to link 2 tables
     # vaccines = db.relationship('VaccineModel', back_populates='cow') similar to backref but requires backpopulates also in vaccinemodel
 
     def __init__(self, private_id, pub_id, heredity):
@@ -23,8 +23,8 @@ class CowModel(db.Model):
     def json(self):
         return {'pub_id': self.pub_id,
                 'private_id': self.private_id,
-                'heredity': self.heredity
-                # 'vaccines_given': [vaccine.json() for vaccine in self.vaccines.all()],
+                'heredity': self.heredity,
+                'vaccines': [vaccine.json() for vaccine in self.vaccines.all()],
                 # 'artificial_inseminations': [artificial_insemination.json() for artificial_insemination in
                 #                              self.artificial_inseminations.all()]
                 }

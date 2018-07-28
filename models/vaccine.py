@@ -12,6 +12,7 @@ class VaccineModel(db.Model):
     cow_id = db.Column(db.Integer, db.ForeignKey('cow.id'))
     #cow = db.relationship('CowModel', backref=db.backref('vaccines', lazy='dynamic'))
     # cow = db.relationship('CowModel', back_populates='vaccines')
+    cow = db.relationship('CowModel')
 
     def __init__(self, vaccine_name, cow_id, date_given):
         self.vaccine_name = vaccine_name
