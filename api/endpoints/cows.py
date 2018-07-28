@@ -12,7 +12,7 @@ ns = api.namespace('cows', description='Cow Operations')
 
 @ns.route('/')
 class Cows(Resource):
-    '''Shows all cows in he farm'''
+    '''Shows all cows in the farm'''
     @ns.doc('list_cows')
     @api.expect(heredity_arguments)
     @ns.marshal_with(cow_with_vaccine)
@@ -26,6 +26,7 @@ class Cows(Resource):
     @ns.doc('create_cow')
     @ns.expect(basic_cow)
     @ns.marshal_with(cow, code=201)
+    @jwt_required
     def post(self):
         '''Create a new cow'''
         create_cow(request.json)
