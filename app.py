@@ -12,9 +12,7 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 app.secret_key = 'jose'
 api = Api(app)
 
-@app.before_first_request
-def create_tables():
-    db.create_all()
+
 
 
 api.add_resource(Cow, '/cow/<string:private_id>')
