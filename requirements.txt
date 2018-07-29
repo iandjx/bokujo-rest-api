@@ -3,4 +3,4 @@ werkzeug
 flask_jwt_extended
 Flask-RESTful
 uwsgi
-pyscopg2
+psycopg2
