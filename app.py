@@ -5,7 +5,7 @@ from flask_restful import Api
 # from flask_jwt import JWT
 from resources.cow import Cow, CowList
 from resources.vaccine import Vaccine
-# from.resources.artificialinsemination import ArtificialInsemination
+from resources.sickness import Sickness
 
 app = Flask(__name__)
 # Get database URL from Heroku if available else use sqlite
@@ -16,11 +16,10 @@ app.secret_key = 'jose'
 api = Api(app)
 
 
-
-
 api.add_resource(Cow, '/cow/<string:private_id>')
 api.add_resource(CowList, '/cows')
 api.add_resource(Vaccine, '/cow/<string:private_id>/vaccine')
+api.add_resource(Sickness, '/cow/<string:private_id>/sickness')
 
 if __name__ == '__main__':
     from db import db

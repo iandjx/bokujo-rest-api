@@ -1,5 +1,4 @@
 from db import db
-from datetime import datetime
 
 
 class VaccineModel(db.Model):
@@ -19,8 +18,8 @@ class VaccineModel(db.Model):
 
     def json(self):
         return {'vaccine_name': self.vaccine_name,
-                'date_given': self.date_given,
-                'cow_id': self.cow_id}
+                'date_given': self.date_given
+                }
 
     def save_to_db(self):
         db.session.add(self)
