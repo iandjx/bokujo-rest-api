@@ -10,9 +10,8 @@ authorizations = {
 }
 
 
-api = Api()
-api.version = "1"
-api.title = "Bokujo API"
-api.description = "Farm Operations"
-api.authorizations = authorizations
+api = Api(version='1.0',
+          title='Bokujo API',
+          description="Farm Operation",
+          authorizations=authorizations)
 

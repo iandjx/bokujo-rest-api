@@ -1,41 +1,26 @@
-from flask import Flask, Blueprint
-from werkzeug.contrib.fixers import ProxyFix
-from flask_sqlalchemy import SQLAlchemy
-from api.restplus import api
-from api.endpoints.cows import ns as cow_namespace
-from api.endpoints.vaccine import ns as vaccine_namespace
-from api.endpoints.artificialinsemination import ns as artifical_insemination_namespace
-from api.endpoints.test import ns as test_namespace
-from api.endpoints.user import ns as user_namespace
-from flask_jwt_extended import JWTManager
-from  flask_restplus import Api
+import os
 
-db = SQLAlchemy()
+from flask import Flask
+from flask_restful import Api
+# from flask_jwt import JWT
+from resources.cow import Cow, CowList
+from resources.vaccine import Vaccine
+# from.resources.artificialinsemination import ArtificialInsemination
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+# Get database URL from Heroku if available else use sqlite
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.secret_key = 'jose'
-app.wsgi_app = ProxyFix(app.wsgi_app)
+api = Api(app)
 
 
-blueprint = Blueprint('api', __name__, url_prefix='/api')
-
-api.init_app(blueprint)
-api.add_namespace(cow_namespace)
-api.add_namespace(vaccine_namespace)
-api.add_namespace(artifical_insemination_namespace)
-api.add_namespace(test_namespace)
-api.add_namespace(user_namespace)
-app.register_blueprint(blueprint)
 
 
-@app.before_first_request
-def create_tables():
-    db.create_all()
-
-
-jwt = JWTManager(app)
+api.add_resource(Cow, '/cow/<string:private_id>')
+api.add_resource(CowList, '/cows')
+api.add_resource(Vaccine, '/cow/<string:private_id>/vaccine')
 
 if __name__ == '__main__':
     from db import db

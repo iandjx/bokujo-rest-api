@@ -1,4 +1,6 @@
-flask-restplus==0.9.2
-Flask-SQLAlchemy==2.1
+Flask-SQLAlchemy
 werkzeug
 flask_jwt_extended
+Flask-RESTful
+uwsgi
+psycopg2
