@@ -1,5 +1,6 @@
-bokujo-api
-# API Endpoints
+# Bokujo REST-Api Server
+
+## API Endpoints
 * /cow
 * /cow/{id}/insemination
 * /cow/{id}/vaccination
