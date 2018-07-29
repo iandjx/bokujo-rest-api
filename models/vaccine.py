@@ -9,9 +9,7 @@ class VaccineModel(db.Model):
     vaccine_name = db.Column(db.String(20))
     date_given = db.Column(db.Integer)
 
-    cow_id = db.Column(db.Integer, db.ForeignKey('cow.id'))
-    #cow = db.relationship('CowModel', backref=db.backref('vaccines', lazy='dynamic'))
-    # cow = db.relationship('CowModel', back_populates='vaccines')
+    cow_id = db.Column(db.Integer, db.ForeignKey('cows.id'))
     cow = db.relationship('CowModel')
 
     def __init__(self, vaccine_name, cow_id, date_given):

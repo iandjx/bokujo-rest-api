@@ -19,7 +19,13 @@ class Vaccine(Resource):
         data = Vaccine.parser.parse_args()
         cow = CowModel.find_by_private_id(private_id)
         vaccine = VaccineModel(**data, cow_id=cow.id)
-        return vaccine.json()
+
+        try:
+            vaccine.save_to_db()
+        except:
+            return {"message": "An error occurred inserting the vaccine."}, 500
+
+        return vaccine.json(), 201
 
 
 
