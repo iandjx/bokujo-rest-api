@@ -8,8 +8,8 @@ class CowModel(db.Model):
     pub_id = db.Column(db.String(20))
     private_id = db.Column(db.String(10))
     heredity = db.Column(db.String(10))
-    vaccines = db.relationship('VaccineModel', lazy='dynamic') #this necessitates explicit queries to link 2 tables
-
+    vaccines = db.relationship('VaccineModel', lazy='dynamic')
+    sickness = db.relationship('SicknessModel', lazy='dynamic')
 
 
     def __init__(self, private_id, pub_id, heredity):
@@ -21,9 +21,8 @@ class CowModel(db.Model):
         return {'pub_id': self.pub_id,
                 'private_id': self.private_id,
                 'heredity': self.heredity,
-                'vaccines': [vaccine.json() for vaccine in self.vaccines.all()]
-                # 'artificial_inseminations': [artificial_insemination.json() for artificial_insemination in
-                #                              self.artificial_inseminations.all()]
+                'vaccines': [vaccine.json() for vaccine in self.vaccines.all()],
+                'sickness': [sickness.json() for sickness in self.sickness.all()],
                 }
 
     @classmethod

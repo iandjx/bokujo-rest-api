@@ -18,6 +18,8 @@ class Vaccine(Resource):
     def post(self, private_id):
         data = Vaccine.parser.parse_args()
         cow = CowModel.find_by_private_id(private_id)
+        if cow is None:
+            return {"message": "Cow doesn't exist"}
         vaccine = VaccineModel(**data, cow_id=cow.id)
 
         try:
