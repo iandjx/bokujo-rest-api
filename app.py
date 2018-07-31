@@ -24,9 +24,9 @@ api.add_resource(Vaccine, '/cow/<string:private_id>/vaccine')
 api.add_resource(Sickness, '/cow/<string:private_id>/sickness')
 api.add_resource(Medication, '/cow/sickness/<int:_id>/medication')
 
-@app.before_first_request
-def create_tables():
-    db.create_all()
+# @app.before_first_request
+# def create_tables():
+#     db.create_all()
 
 if __name__ == '__main__':
     from db import db
