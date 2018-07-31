@@ -38,6 +38,9 @@ class Sickness(Resource):
 
         return sickness.json(), 201
 
+    def get(self, private_id):
+        return SicknessModel.search_all(private_id)
+
 
 
 
