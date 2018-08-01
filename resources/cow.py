@@ -1,6 +1,6 @@
 from models.cow import CowModel
 from flask_restful import Resource, reqparse
-
+from models.cowrelationship import CowRelationship
 
 class Cow(Resource):
     parser = reqparse.RequestParser()
@@ -12,8 +12,12 @@ class Cow(Resource):
     parser.add_argument('heredity',
                         type=str,
                         required=True,
-                        help="This field cannot be left blank."
+                        help="Choose either holstein, wagyu or f1",
+                        choices=('holstein', 'wagyu', 'f1')
                         )
+    parser.add_argument('mother_private_id',
+                        type=str,
+                        required=True)
 
     def get(self, private_id):
         cow = CowModel.find_by_private_id(private_id)
@@ -26,14 +30,18 @@ class Cow(Resource):
             return {'message': "Private ID  '{}' is already being used.".format(private_id)}, 400
 
         data = Cow.parser.parse_args()
+        cowrelationship = CowRelationship(private_id, data['mother_private_id'])
+        cowrelationship.save_to_db()
 
-        cow = CowModel(private_id=private_id, **data)
+        cow = CowModel(private_id=private_id,
+                       cow_relationship_id=cowrelationship.id,
+                       heredity=data['heredity'],
+                       pub_id=data['pub_id'])
         try:
             cow.save_to_db()
         except:
 
             return {"message": "An error occurred inserting the cow."}, 500
-
         return cow.json(), 201
 
 
