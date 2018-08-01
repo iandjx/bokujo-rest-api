@@ -18,6 +18,10 @@ class Cow(Resource):
     parser.add_argument('mother_private_id',
                         type=str,
                         required=True)
+    parser.add_argument('type_of_delivery',
+                        type=str,
+                        help="")
+
 
     def get(self, private_id):
         cow = CowModel.find_by_private_id(private_id)
@@ -36,7 +40,8 @@ class Cow(Resource):
         cow = CowModel(private_id=private_id,
                        cow_relationship_id=cowrelationship.id,
                        heredity=data['heredity'],
-                       pub_id=data['pub_id'])
+                       pub_id=data['pub_id'],
+                       type_of_delivery=data['type_of_delivery'])
         try:
             cow.save_to_db()
         except:

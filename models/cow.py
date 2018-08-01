@@ -8,6 +8,7 @@ class CowModel(db.Model):
     pub_id = db.Column(db.String(20))
     private_id = db.Column(db.String(10))
     heredity = db.Column(db.String(10))
+    type_of_delivery = db.Column(db.String)
 
     cow_relationship_id = db.Column(db.Integer, db.ForeignKey('cowrelationships.id'))
     cow_relationship = db.relationship('CowRelationship')
@@ -15,11 +16,12 @@ class CowModel(db.Model):
     vaccines = db.relationship('VaccineModel', lazy='dynamic')
     sickness = db.relationship('SicknessModel', lazy='dynamic')
 
-    def __init__(self, private_id, pub_id, heredity, cow_relationship_id):
+    def __init__(self, private_id, pub_id, heredity, cow_relationship_id, type_of_delivery):
         self.pub_id = pub_id
         self.private_id = private_id
         self.heredity = heredity
         self.cow_relationship_id = cow_relationship_id
+        self.type_of_delivery = type_of_delivery
 
     def json(self):
         return {'pub_id': self.pub_id,
@@ -27,7 +29,8 @@ class CowModel(db.Model):
                 'heredity': self.heredity,
                 'vaccines': [vaccine.json() for vaccine in self.vaccines.all()],
                 'sickness': [sickness.json() for sickness in self.sickness.all()],
-                'cow_relationship_id': self.cow_relationship_id
+                'cow_relationship_id': self.cow_relationship_id,
+                'type_of_delivery' : self.type_of_delivery
                 }
 
     @classmethod
