@@ -7,6 +7,7 @@ from resources.cow import Cow, CowList
 from resources.vaccine import Vaccine
 from resources.sickness import Sickness
 from resources.medication import Medication
+from resources.cowrelationship import CowRelationshipList
 
 app = Flask(__name__)
 # Get database URL from Heroku if available else use sqlite
@@ -23,6 +24,7 @@ api.add_resource(CowList, '/cows')
 api.add_resource(Vaccine, '/cow/<string:private_id>/vaccine')
 api.add_resource(Sickness, '/cow/<string:private_id>/sickness')
 api.add_resource(Medication, '/cow/sickness/<int:_id>/medication')
+api.add_resource(CowRelationshipList, '/cows/cowrelationships')
 
 @app.before_first_request
 def create_tables():
