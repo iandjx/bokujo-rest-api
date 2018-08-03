@@ -4,3 +4,6 @@ flask_jwt_extended
 Flask-RESTful
 uwsgi
 psycopg2
+alembic
+Flask-Migrate
+Flask-Script
