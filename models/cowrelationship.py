@@ -5,7 +5,7 @@ class CowRelationship(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     mother_private_id = db.Column(db.String)
-    child_private_id = db.Column(db.Integer)
+    child_private_id = db.Column(db.String)
 
     relationships = db.relationship('CowModel', lazy='dynamic')
 
