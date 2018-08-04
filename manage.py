@@ -1,5 +1,10 @@
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
+from models.cowrelationship import CowRelationship
+from models.cowrelationship import CowRelationship
+from models.medication import MedicationModel
+from models.sickness import SicknessModel
+from models.vaccine import VaccineModel
 
 from app import app
 from db import db
