@@ -37,8 +37,8 @@ class Cow(Resource):
             return {'message': "Private ID  '{}' is already being used.".format(private_id)}, 400
 
         data = Cow.parser.parse_args()
-        cowrelationship = CowRelationship(private_id, data['mother_private_id'])
-        cowrelationship.save_to_db()
+        # cowrelationship = CowRelationship(private_id, data['mother_private_id'])
+        # cowrelationship.save_to_db()
 
         cow = CowModel(private_id=private_id,
                        cow_relationship_id=cowrelationship.id,
