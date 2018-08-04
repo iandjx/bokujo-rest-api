@@ -21,6 +21,9 @@ class Cow(Resource):
     parser.add_argument('type_of_delivery',
                         type=str,
                         help="")
+    parser.add_argument('current_pen',
+                        type=str,
+                        help="")
 
 
     def get(self, private_id):
@@ -41,7 +44,9 @@ class Cow(Resource):
                        cow_relationship_id=cowrelationship.id,
                        heredity=data['heredity'],
                        pub_id=data['pub_id'],
-                       type_of_delivery=data['type_of_delivery'])
+                       type_of_delivery=data['type_of_delivery'],
+                       current_pen=data['current_pen']
+                       )
         try:
             cow.save_to_db()
         except:
