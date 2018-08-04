@@ -1,17 +1,10 @@
 # Bokujo REST-Api Server
 
 ## API Endpoints
-* /cow
-* /cow/{id}/insemination
-* /cow/{id}/vaccination
-* /cow/{id}/vaccination/{id}
-* /cow/{id}/problems
-* /cow/{id}/problems/{id}
 
 
-
-
-* /cow/{id}/dehorn
-* /cow/{id}/castrate
-
-
+### Updating database tables and columns in local and Heroku environment
+1.  Run `python manage.py db migrate` locally when a new table or column is added
+2. Run `python manage.py db upgrade` to commit changes to the database
+3. Deploy to Heroku
+4.  Run `heroku run db upgrade`
