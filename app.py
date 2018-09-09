@@ -2,12 +2,13 @@ import os
 
 from flask import Flask
 from flask_restful import Api
-# from flask_jwt import JWT
+from flask_jwt_extended import JWTManager
 from resources.cow import Cow, CowList
 from resources.vaccine import Vaccine
 from resources.sickness import Sickness
 from resources.medication import Medication
 from resources.cowrelationship import CowRelationshipList
+from resources.user import UserRegister, User, UserLogin
 
 app = Flask(__name__)
 # Get database URL from Heroku if available else use sqlite
@@ -19,6 +20,7 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 app.config['SQLALCHEMY_ECHO'] = True
 app.secret_key = 'jose'
 api = Api(app)
+jwt = JWTManager(app)
 
 
 api.add_resource(Cow, '/cow/<string:private_id>')
@@ -27,6 +29,9 @@ api.add_resource(Vaccine, '/cow/<string:private_id>/vaccine')
 api.add_resource(Sickness, '/cow/<string:private_id>/sickness')
 api.add_resource(Medication, '/cow/sickness/<int:_id>/medication')
 api.add_resource(CowRelationshipList, '/cows/cowrelationships')
+api.add_resource(UserRegister, '/register')
+api.add_resource(User, '/user/<int:user_id>')
+api.add_resource(UserLogin, '/login')
 
 # @app.before_first_request
 # def create_tables():

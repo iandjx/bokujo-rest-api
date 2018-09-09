@@ -1,11 +1,7 @@
-from flask_restplus import Resource, reqparse
-from models.user import UserModel
-from api.restplus import api
-from api.core.serializers import user
-from flask_jwt_extended import create_access_token, create_refresh_token
+from flask_restful import Resource, reqparse
 from werkzeug.security import safe_str_cmp
-
-ns = api.namespace('user', description='User')
+from flask_jwt_extended import create_access_token, create_refresh_token
+from models.user import UserModel
 
 _user_parser = reqparse.RequestParser()
 _user_parser.add_argument('username',
@@ -20,10 +16,7 @@ _user_parser.add_argument('password',
                           )
 
 
-@ns.route('/register')
 class UserRegister(Resource):
-
-    @ns.expect(user)
     def post(self):
         data = _user_parser.parse_args()
 
@@ -36,29 +29,29 @@ class UserRegister(Resource):
         return {"message": "User created successfully."}, 201
 
 
-@ns.route('/<int:user_id>')
 class User(Resource):
     """
     This resource can be useful when testing our Flask app. We may not want to expose it to public users, but for the
     sake of demonstration in this course, it can be useful when we are manipulating data regarding the users.
     """
-    def get(self, user_id: int):
+
+    @classmethod
+    def get(cls, user_id: int):
         user = UserModel.find_by_id(user_id)
         if not user:
             return {'message': 'User Not Found'}, 404
         return user.json(), 200
 
-    def delete(self, user_id: int):
+    @classmethod
+    def delete(cls, user_id: int):
         user = UserModel.find_by_id(user_id)
         if not user:
             return {'message': 'User Not Found'}, 404
         user.delete_from_db()
         return {'message': 'User deleted.'}, 200
 
-@ns.route('/login')
-class UserLogin(Resource):
 
-    @ns.expect(user)
+class UserLogin(Resource):
     def post(self):
         data = _user_parser.parse_args()
 
@@ -70,8 +63,8 @@ class UserLogin(Resource):
             access_token = create_access_token(identity=user.id, fresh=True)
             refresh_token = create_refresh_token(user.id)
             return {
-                'access_token': access_token,
-                'refresh_token': refresh_token
-            }, 200
+                       'access_token': access_token,
+                       'refresh_token': refresh_token
+                   }, 200
 
         return {"message": "Invalid Credentials!"}, 401
