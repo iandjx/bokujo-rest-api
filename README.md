@@ -6,5 +6,5 @@
 ### Updating database tables and columns in local and Heroku environment
 1.  Run `python manage.py db migrate` locally when a new table or column is added
 2. Run `python manage.py db upgrade` to commit changes to the database
-3. Deploy to Heroku
-4.  Run `heroku run db upgrade`
+3. Deploy to Heroku and login to Heroku-cli
+4.  Run `heroku run db upgrade --app bokujo-rest-api`
