@@ -1,6 +1,4 @@
 from db import db
-from models.cow import CowModel
-from models.sickness import SicknessModel
 
 
 class MedicationModel(db.Model):
@@ -8,19 +6,20 @@ class MedicationModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     medicine_name = db.Column(db.String(20))
-    date_given = db.Column(db.Integer)
+    date_started = db.Column(db.DateTime(timezone=True))
+    date_stopped = db.Column(db.DateTime(timezone=True))
+    medication_type = db.Column(db.String(32), nullable=False)
+    __mapper_args = {'polymorphic_on': medication_type}
 
-    sickness_id = db.Column(db.Integer, db.ForeignKey('sickness.id'))
-    sickness = db.relationship('SicknessModel')
-
-    def __init__(self, medicine_name, sickness_id, date_given):
+    def __init__(self, medicine_name, date_started, date_stopped):
         self.medicine_name = medicine_name
-        self.date_given = date_given
-        self.sickness_id = sickness_id
+        self.date_started = date_started
+        self.date_stopped = date_stopped
 
     def json(self):
         return {'medicine_name': self.medicine_name,
-                'date_given': self.date_given
+                'date_started': self.date_started,
+                'date_stopped': self.date_stopped
                 }
 
     def save_to_db(self):

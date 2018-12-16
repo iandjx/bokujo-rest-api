@@ -65,3 +65,5 @@ ENV/
 
 # Editors
 .idea/
+
+\.DS_Store
