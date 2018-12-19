@@ -60,7 +60,7 @@ class Mastitis(Resource):
         if MastitisModel.find_by_id(_id):
             return {'message': 'Ailment already exists'}, 400
 
-        data = MastitisModel.parser.parse_args()
+        data = Mastitis.parser.parse_args()
 
         mastitis = MastitisModel(problem_name=data['problem_name'],
                                  date_diagnosed=data['date_diagnosed'],
@@ -69,11 +69,14 @@ class Mastitis(Resource):
                                  is_right_back_affected=data['is_right_back_affected'],
                                  is_right_front_affected=data['is_right_front_affected'],
                                  is_left_front_affected=data['is_left_front_affected'],
-                                 cow_id=data['cow_id'])
+                                 date_treated=data['date_treated'],
+                                 cow_id=data['cow_id'],
+                                 mastitis_id)
         try:
             mastitis.save_to_db()
-        except:
-            return {"message": "An error occurred inserting the mastitis ailment."}, 500
+        except Exception as e:
+
+            return {e}, 500
 
         return mastitis.json(), 201
 

@@ -31,7 +31,6 @@ class Cow(Resource):
         cow = CowModel(private_id=private_id,
                        pub_id=data['pub_id'],
                        current_pen=data['current_pen'],
-                       heredity=data['heredity'],
                        mother_id=data['mother_id']
                        )
         try:

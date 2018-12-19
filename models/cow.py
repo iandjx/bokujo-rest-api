@@ -10,7 +10,7 @@ class CowModel(db.Model):
     current_pen = db.Column(db.String)
     mother_id = db.Column(db.Integer)
 
-    problems = db.relationship('Problems', lazy='dyanamic')
+    problems = db.relationship('Problems', lazy='dynamic')
 
     def __init__(self, private_id, pub_id, current_pen, mother_id):
         self.pub_id = pub_id
@@ -21,7 +21,6 @@ class CowModel(db.Model):
     def json(self):
         return {'pub_id': self.pub_id,
                 'private_id': self.private_id,
-                'heredity': self.heredity,
                 'current_pen': self.current_pen,
                 'mother_id': self.mother_id
                 }
