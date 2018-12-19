@@ -70,8 +70,8 @@ class Mastitis(Resource):
                                  is_right_front_affected=data['is_right_front_affected'],
                                  is_left_front_affected=data['is_left_front_affected'],
                                  date_treated=data['date_treated'],
-                                 cow_id=data['cow_id'],
-                                 mastitis_id)
+                                 cow_id=data['cow_id']
+                                 )
         try:
             mastitis.save_to_db()
         except Exception as e:
