@@ -5,26 +5,22 @@ from datetime import datetime
 
 class Mastitis(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument('problem_name',
-                        type=str,
-                        required=True,
-                        help="This field cannot be left blank."
-                        )
-    parser.add_argument('date_diagnosed',
-                        type=lambda x: datetime.strptime(x, '%Y-%m-%dT%H:%M:%S'),
-                        required=True,
-                        help="This field cannot be left blank."
-                        )
-    parser.add_argument('date_treated',
-                        type=lambda x: datetime.strptime(x, '%Y-%m-%dT%H:%M:%S'),
-                        required=True,
-                        help="This field cannot be left blank."
-                        )
-    parser.add_argument('date_cured',
-                        type=lambda x: datetime.strptime(x, '%Y-%m-%dT%H:%M:%S'),
-                        required=True,
-                        help="This field cannot be left blank."
-                        )
+    parser.add_argument
+    # parser.add_argument('date_diagnosed',
+    #                     type=lambda x: datetime.strptime(x, '%Y-%m-%dT%H:%M:%S'),
+    #                     required=True,
+    #                     help="This field cannot be left blank."
+    #                     )
+    # parser.add_argument('date_treated',
+    #                     type=lambda x: datetime.strptime(x, '%Y-%m-%dT%H:%M:%S'),
+    #                     required=True,
+    #                     help="This field cannot be left blank."
+    #                     )
+    # parser.add_argument('date_cured',
+    #                     type=lambda x: datetime.strptime(x, '%Y-%m-%dT%H:%M:%S'),
+    #                     required=True,
+    #                     help="This field cannot be left blank."
+    #                     )
     parser.add_argument('is_right_front_affected',
                         type=bool,
                         required=True,
@@ -45,10 +41,7 @@ class Mastitis(Resource):
                         required=True,
                         help="This field cannot be left blank"
                         )
-    parser.add_argument('cow_id',
-                        type=str,
-                        required=True,
-                        help="This field cannot be left blank")
+
 
     def get(self, _id):
         mastitis = MastitisModel.find_by_id(_id)
@@ -61,17 +54,17 @@ class Mastitis(Resource):
             return {'message': 'Ailment already exists'}, 400
 
         data = Mastitis.parser.parse_args()
-
-        mastitis = MastitisModel(problem_name=data['problem_name'],
-                                 date_diagnosed=data['date_diagnosed'],
-                                 date_cured=data['date_cured'],
+        mastitis = MastitisModel(
+                                 # date_diagnosed=data['date_diagnosed'],
+                                 # date_cured=data['date_cured'],
                                  is_left_back_affected=data['is_left_back_affected'],
                                  is_right_back_affected=data['is_right_back_affected'],
                                  is_right_front_affected=data['is_right_front_affected'],
                                  is_left_front_affected=data['is_left_front_affected'],
-                                 date_treated=data['date_treated'],
-                                 cow_id=data['cow_id']
+                                 # date_treated=data['date_treated'],
+
                                  )
+        print(mastitis.json())
         try:
             mastitis.save_to_db()
         except Exception as e:

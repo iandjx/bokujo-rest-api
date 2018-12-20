@@ -33,6 +33,7 @@ class Cow(Resource):
                        current_pen=data['current_pen'],
                        mother_id=data['mother_id']
                        )
+        print(cow.json())
         try:
             cow.save_to_db()
         except:
