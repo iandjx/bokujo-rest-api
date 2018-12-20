@@ -7,6 +7,8 @@ from resources.cow import Cow, CowList
 from resources.mastitis import Mastitis
 from resources.mastitis_medications import MastitisMedication
 from resources.user import UserRegister, User, UserLogin
+from resources.test import Test
+from resources.inherit import Inherit
 
 app = Flask(__name__)
 # Get database URL from Heroku if available else use sqlite
@@ -28,6 +30,8 @@ api.add_resource(Mastitis, '/cow/mastitis/<int:_id>')
 api.add_resource(UserRegister, '/register')
 api.add_resource(User, '/user/<int:user_id>')
 api.add_resource(UserLogin, '/login')
+api.add_resource(Test, '/test/<string:name>')
+api.add_resource(Inherit, '/inherit/<string:name>')
 
 # @app.before_first_request
 # def create_tables():
