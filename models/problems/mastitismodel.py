@@ -1,5 +1,5 @@
 from db import db
-from models.problems.problems import Problems
+from models.problems.problemmodel import ProblemModel
 
 
 class MastitisModel(db.Model):
