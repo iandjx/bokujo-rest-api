@@ -2,6 +2,7 @@ from models.testmodel import TestModel
 from flask_restful import Resource, reqparse
 from models.problems.problemmodel import ProblemModel
 from datetime import datetime
+from arrow import arrow
 
 class Problem(Resource):
     parser = reqparse.RequestParser()
@@ -34,16 +35,18 @@ class Problem(Resource):
     def post(self, _id):
         data = Problem.parser.parse_args()
         problem = ProblemModel(
-            date_diagnosed=data['date_diagnoes'],
+            date_diagnosed=data['date_diagnosed'],
             date_treated=data['date_treated'],
             date_cured=data['date_cured'],
             cow_id=data['cow_id']
         )
-
+        print(data['date_diagnosed'].timestamp())
+        print(datetime.fromtimestamp(data['date_diagnosed'].timestamp()).strftime('%c'))
         try:
             problem.save_to_db()
-        except:
-            return {"message": "An error occurred inserting the cow."}, 500
+        except Exception as e:
+
+            return {e}, 500
 
         return problem.json(), 201
 
