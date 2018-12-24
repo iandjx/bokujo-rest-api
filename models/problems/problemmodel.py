@@ -5,9 +5,9 @@ class ProblemModel(db.Model):
     __tablename__ = "problems"
 
     id = db.Column(db.Integer, primary_key=True)
-    date_diagnosed = db.Column(db.DateTime(timezone=True))
-    date_treated = db.Column(db.DateTime(timezone=True))
-    date_cured = db.Column(db.DateTime(timezone=True))
+    date_diagnosed = db.Column(db.BigInteger)
+    date_treated = db.Column(db.BigInteger)
+    date_cured = db.Column(db.BigInteger)
     problem_type = db.Column(db.String(32), nullable=False)
     cow_id = db.Column(db.Integer, db.ForeignKey('cows.id'))
 
@@ -29,7 +29,8 @@ class ProblemModel(db.Model):
                 'date_diagnosed': self.date_diagnosed,
                 'date_treated': self.date_treated,
                 'date_cured': self.date_cured,
-                'cow_id': self.cow_id}
+                'cow_id': self.cow_id
+                }
 
     def save_to_db(self):
         db.session.add(self)

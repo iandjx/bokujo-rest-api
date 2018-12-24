@@ -2,9 +2,11 @@ from models.testmodel import TestModel
 from flask_restful import Resource, reqparse
 from models.problems.problemmodel import ProblemModel
 from datetime import datetime
-from arrow import arrow
+import arrow
+
 
 class Problem(Resource):
+
     parser = reqparse.RequestParser()
     parser.add_argument('date_diagnosed',
                         type=lambda x: datetime.strptime(x, '%Y-%m-%dT%H:%M:%S'),
@@ -34,14 +36,18 @@ class Problem(Resource):
 
     def post(self, _id):
         data = Problem.parser.parse_args()
-        problem = ProblemModel(
-            date_diagnosed=data['date_diagnosed'],
-            date_treated=data['date_treated'],
-            date_cured=data['date_cured'],
-            cow_id=data['cow_id']
-        )
-        print(data['date_diagnosed'].timestamp())
+        # problem = ProblemModel(
+        #     date_diagnosed=arrow.get(data['date_diagnosed']).timestamp,
+        #     date_treated=arrow.get(data['date_treated']).timestamp,
+        #     date_cured=arrow.get(data['date_cured']).timestamp,
+        #     cow_id=data['cow_id']
+        #     )
+        problem = ProblemModel(1231,1231,12312,1231)
+        print(arrow.get(data['date_diagnosed']).timestamp)
+        print(data['date_diagnosed'])
         print(datetime.fromtimestamp(data['date_diagnosed'].timestamp()).strftime('%c'))
+        print(problem.json())
+        print(type(problem).__class__)
         try:
             problem.save_to_db()
         except Exception as e:
