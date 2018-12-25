@@ -1,5 +1,5 @@
 from db import db
-from models.testmodel import TestModel
+from models.problems.testmodel import TestModel
 
 
 class ModelInherit(TestModel):
@@ -7,17 +7,22 @@ class ModelInherit(TestModel):
     id = db.Column(db.Integer, db.ForeignKey('tests.id'), primary_key=True)
     has_penis = db.Column(db.Boolean)
 
-    __mapper_args__ = {'polymorphic_identity': 'male'}
 
-    def __init__(self, name, age, is_real, has_penis):
-        super().__init__(name, age, is_real)
+
+    __mapper_args__ = {'polymorphic_identity': 'mastitis'}
+
+    def __init__(self, name, age, is_real, has_penis, date_diagnosed, date_cured, date_treated):
+        super().__init__(name, age, is_real, date_diagnosed, date_cured, date_treated)
         self.has_penis = has_penis
 
     def json(self):
         return {'name': self.name,
-               'age': self.age,
-               'is_real': self.is_real,
-               'has_penis': self.has_penis}
+                'age': self.age,
+                'is_real': self.is_real,
+                'has_penis': self.has_penis,
+                'date_diagnosed': self.date_diagnosed,
+                'date_cured': self.date_cured,
+                'date_treated': self.date_treated}
 
     def save_to_db(self):
         db.session.add(self)

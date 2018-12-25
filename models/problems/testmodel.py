@@ -5,19 +5,22 @@ class TestModel(db.Model):
     __tablename__ = "tests"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20))
-    age = db.Column(db.Integer)
-    is_real = db.Column(db.Boolean)
-    person_type = db.Column(db.String(30))
+    date_diagnosed = db.Column(db.BigInteger)
+    date_cured = db.Column(db.BigInteger)
+    date_treated = db.Column(db.BigInteger)
 
+    problem_type = db.Column(db.String(30))
     __mapper_args__ = {
         'polymorphic_identity': 'test',
-        'polymorphic_on': person_type}
+        'polymorphic_on': problem_type}
 
-    def __init__(self, name,age, is_real):
+    def __init__(self, name,age, is_real, date_diagnosed, date_cured, date_treated):
         self.name = name
         self.age = age
         self.is_real = is_real
+        self.date_diagnosed = date_diagnosed
+        self.date_cured = date_cured
+        self.date_treated = date_treated
 
     def json(self):
         return{'name': self.name,
