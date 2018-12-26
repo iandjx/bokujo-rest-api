@@ -11,6 +11,7 @@ class CowModel(db.Model):
     mother_id = db.Column(db.Integer)
 
     problems = db.relationship('Problems', lazy='dynamic')
+    # tests = db.relationship('TestModel', lazy='dynamic')
 
     def __init__(self, private_id, pub_id, current_pen, mother_id):
         self.pub_id = pub_id

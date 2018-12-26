@@ -8,7 +8,7 @@ class TestModel(db.Model):
     date_diagnosed = db.Column(db.BigInteger)
     date_cured = db.Column(db.BigInteger)
     date_treated = db.Column(db.BigInteger)
-
+    # cow_id = db.Column(db.Integer, db.ForeignKey('cows.id'))
     problem_type = db.Column(db.String(30))
     __mapper_args__ = {
         'polymorphic_identity': 'test',
@@ -21,6 +21,7 @@ class TestModel(db.Model):
         self.date_diagnosed = date_diagnosed
         self.date_cured = date_cured
         self.date_treated = date_treated
+        # self.cow_id = cow_id
 
     def json(self):
         return{'name': self.name,

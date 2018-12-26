@@ -12,7 +12,9 @@ class ModelInherit(TestModel):
     __mapper_args__ = {'polymorphic_identity': 'mastitis'}
 
     def __init__(self, name, age, is_real, has_penis, date_diagnosed, date_cured, date_treated):
-        super().__init__(name, age, is_real, date_diagnosed, date_cured, date_treated)
+        super().__init__(name, age, is_real, date_diagnosed, date_cured, date_treated
+                         # , cow_id
+                         )
         self.has_penis = has_penis
 
     def json(self):
@@ -22,7 +24,9 @@ class ModelInherit(TestModel):
                 'has_penis': self.has_penis,
                 'date_diagnosed': self.date_diagnosed,
                 'date_cured': self.date_cured,
-                'date_treated': self.date_treated}
+                'date_treated': self.date_treated,
+                # 'cow_id': self.cow_id
+                }
 
     def save_to_db(self):
         db.session.add(self)

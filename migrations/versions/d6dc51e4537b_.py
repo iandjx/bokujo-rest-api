@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 069b313dbb7c
+Revision ID: d6dc51e4537b
 Revises: 
-Create Date: 2018-12-25 00:56:05.249441
+Create Date: 2018-12-26 16:36:30.115963
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '069b313dbb7c'
+revision = 'd6dc51e4537b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -44,10 +44,10 @@ def upgrade():
     )
     op.create_table('tests',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=20), nullable=True),
-    sa.Column('age', sa.Integer(), nullable=True),
-    sa.Column('is_real', sa.Boolean(), nullable=True),
-    sa.Column('person_type', sa.String(length=30), nullable=True),
+    sa.Column('date_diagnosed', sa.BigInteger(), nullable=True),
+    sa.Column('date_cured', sa.BigInteger(), nullable=True),
+    sa.Column('date_treated', sa.BigInteger(), nullable=True),
+    sa.Column('problem_type', sa.String(length=30), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('users',
@@ -59,7 +59,6 @@ def upgrade():
     op.create_table('inheritmodel',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('has_penis', sa.Boolean(), nullable=True),
-    sa.Column('date_diagnosed', sa.BigInteger(), nullable=True),
     sa.ForeignKeyConstraint(['id'], ['tests.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
