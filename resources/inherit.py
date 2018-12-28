@@ -29,9 +29,9 @@ class Inherit(Resource):
     parser.add_argument('date_treated',
                         type=lambda x: datetime.strptime(x, '%Y-%m-%dT%H:%M:%S'),
                         required=True)
-    # parser.add_argument('cow_id',
-    #                     type=int,
-    #                     required=True)
+    parser.add_argument('cow_id',
+                        type=int,
+                        required=True)
 
     def get(self,name):
         inherit = ModelInherit.find_by_name(name)
@@ -47,8 +47,8 @@ class Inherit(Resource):
                                has_penis=data['has_penis'],
                                date_diagnosed=arrow.get(data['date_diagnosed']).timestamp,
                                date_cured=arrow.get(data['date_cured']).timestamp,
-                               date_treated=arrow.get(data['date_treated']).timestamp
-                               # cow_id=data['cow_id']
+                               date_treated=arrow.get(data['date_treated']).timestamp,
+                               cow_id=data['cow_id']
                                )
 
         try:
