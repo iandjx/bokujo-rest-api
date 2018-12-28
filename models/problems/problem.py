@@ -14,11 +14,7 @@ class ProblemModel(db.Model):
     __mapper_args__ = {'polymorphic_on': problem_type,
                        'polymorphic_identity': 'problem'}
 
-    def __init__(self,
-                 date_diagnosed,
-                 date_treated,
-                 date_cured,
-                 cow_id):
+    def __init__(self, date_diagnosed, date_treated, date_cured, cow_id):
         self.date_diagnosed = date_diagnosed
         self.date_treated = date_treated
         self.date_cured = date_cured

@@ -1,6 +1,5 @@
-from models.testmodel import TestModel
 from flask_restful import Resource, reqparse
-from models.problems.problemmodel import ProblemModel
+from models.problems.problem import ProblemModel
 from datetime import datetime
 import arrow
 
