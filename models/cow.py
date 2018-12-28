@@ -9,8 +9,9 @@ class CowModel(db.Model):
     private_id = db.Column(db.String(10))
     current_pen = db.Column(db.String)
     mother_id = db.Column(db.Integer)
+    problems = db.relationship('Problems', lazy='dynamic')
+    inherits = db.relationship('ModelInherit', lazy='dynamic')
 
-    problems = db.relationship('ProblemModel', lazy='dynamic')
 
     def __init__(self, private_id, pub_id, current_pen, mother_id):
         self.pub_id = pub_id

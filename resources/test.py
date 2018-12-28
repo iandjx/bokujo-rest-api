@@ -1,4 +1,4 @@
-from models.testmodel import TestModel
+from models.problems.testmodel import TestModel
 from flask_restful  import Resource, reqparse
 
 
