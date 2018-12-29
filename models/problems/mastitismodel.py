@@ -9,14 +9,15 @@ class MastitisModel(ProblemModel):
     is_left_front_affected = db.Column(db.Boolean)
     is_right_back_affected = db.Column(db.Boolean)
     is_left_back_affected = db.Column(db.Boolean)
+
     id = db.Column(db.Integer, db.ForeignKey('problems.id'), nullable=False, primary_key=True)
     __mapper_args__ = {'polymorphic_identity': 'mastitis'}
 
-    # mastitis_medications = db.relationship('MastitisMedicationModel', lazy='dynamic')
+    mastitis_medications = db.relationship('MastitisMedicationModel', lazy='dynamic')
 
     def __init__(self, is_right_front_affected, is_left_front_affected, is_right_back_affected, is_left_back_affected,
                  cow_id, date_diagnosed, date_treated, date_cured):
-        super().__init__(date_diagnosed, date_treated, date_cured, cow_id )
+        super().__init__(date_diagnosed, date_treated, date_cured, cow_id)
         self.is_right_back_affected = is_right_back_affected
         self.is_left_back_affected = is_left_back_affected
         self.is_left_front_affected = is_left_front_affected
@@ -43,5 +44,6 @@ class MastitisModel(ProblemModel):
         db.session.commit()
 
     @classmethod
-    def find_by_id(cls, _id):
-        return cls.query.filter_by(id=_id).first()
+    def find_existing_mastitis(cls, date_cured):
+        return cls.query.filter_by(date_cured.is_(None)).first()
+        # TODO: change find_by_id to find for if an existing ailment exists

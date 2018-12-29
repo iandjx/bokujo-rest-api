@@ -20,6 +20,7 @@ class MastitisMedication(Resource):
                         required=True,
                         help="This field cannot be left blank."
                         )
+    # TODO: Change int to DateTime
     parser.add_argument('mastitis_id',
                         type=int,
                         required=True,
@@ -34,6 +35,7 @@ class MastitisMedication(Resource):
     def post(self, _id):
         data = MastitisMedication.parser.parse_args()
         mastitis = MastitisModel.find_by_id(_id)
+        # TODO: change to find if ailment is treated or not
         if mastitis is None:
             return {"message": "Ailment doesn't exist"}
         mastitis_medication = MastitisMedicationModel(**data, mastitis_id=_id)

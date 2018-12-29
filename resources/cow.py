@@ -4,7 +4,7 @@ from flask_restful import Resource, reqparse
 
 class Cow(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument('pub_id',
+    parser.add_argument('private_id',
                         type=str,
                         required=True,
                         help="This field cannot be left blank."
@@ -16,20 +16,21 @@ class Cow(Resource):
                         type=str,
                         help="")
 
-    def get(self, private_id):
-        cow = CowModel.find_by_private_id(private_id)
+    def get(self, pub_id):
+        cow = CowModel.find_by_pub_id(pub_id)
+        # TODO: change to find_by_pub_id
         if cow:
             return cow.json()
         return {'message': 'Cow not found'}, 404
 
-    def post(self, private_id):
-        if CowModel.find_by_private_id(private_id):
-            return {'message': "Private ID  '{}' is already being used.".format(private_id)}, 400
-
+    def post(self, pub_id):
+        if CowModel.find_by_pub_id(pub_id):
+            # TODO: change to find_by_pub_id
+            return {'message': "Pub ID  '{}' is already being used.".format(pub_id)}, 400
         data = Cow.parser.parse_args()
 
-        cow = CowModel(private_id=private_id,
-                       pub_id=data['pub_id'],
+        cow = CowModel(private_id=data['private_id'],
+                       pub_id=pub_id,
                        current_pen=data['current_pen'],
                        mother_id=data['mother_id']
                        )
@@ -45,7 +46,6 @@ class CowList(Resource):
     def get(self):
         return {'cows': list(map(lambda x: x.json(), CowModel.query.all()))}
 
-    # @ns.doc('create_cow')
 
 
 

@@ -12,7 +12,6 @@ class CowModel(db.Model):
     problems = db.relationship('ProblemModel', lazy='dynamic')
     # inherits = db.relationship('ModelInherit', lazy='dynamic')
 
-
     def __init__(self, private_id, pub_id, current_pen, mother_id):
         self.pub_id = pub_id
         self.private_id = private_id
@@ -27,8 +26,9 @@ class CowModel(db.Model):
                 }
 
     @classmethod
-    def find_by_private_id(cls, private_id):
-        return cls.query.filter_by(private_id=private_id).first()
+    def find_by_pub_id(cls, pub_id):
+        return cls.query.filter_by(pub_id=pub_id).first()
+        # TODO: change find_by_private_id to find_by_pub_id
 
     def save_to_db(self):
         db.session.add(self)

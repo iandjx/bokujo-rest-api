@@ -6,9 +6,11 @@ class MastitisMedicationModel(MedicationModel):
     __tablename__ = "mastitis_medications"
 
     mastitis_id = db.Column(db.Integer, db.ForeignKey('mastitis.id'))
+    # TODO: check proper relationship with mastitis table
 
     id = db.Column(db.Integer, db.ForeignKey('medications.id'), primary_key=True)
     __mapper_args = {'polymorphic_identity': 'mastitis_medication'}
+    # TODO: check proper relationship with medications table
 
     def __init__(self, medicine_name, date_started, date_stopped, mastitis_id ):
         super().__init__(medicine_name, date_started, date_stopped)

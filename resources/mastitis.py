@@ -40,16 +40,22 @@ class Mastitis(Resource):
                         )
 
     def get(self, _id):
+        # TODO: get attribute should be pub_id
+        # TODO: check if cow exists first
         mastitis = MastitisModel.find_by_id(_id)
+        # TODO: change to find if there is existing ailment
+
         if mastitis:
             return mastitis.json()
         return {'message': 'Mastitis not found'}, 404
 
     def post(self, _id):
-        if MastitisModel.find_by_id(_id):
-            return {'message': 'Ailment already exists'}, 400
-
+        # TODO: post attribute should be pub_id
+        # TODO: check if cow exists first
+        # TODO: change to find if there is existing ailment
         data = Mastitis.parser.parse_args()
+        if MastitisModel.find_existing_mastitis(data['date_cured']):
+            return {'message': 'Existing mastitis is not cured yet'}, 400
         mastitis = MastitisModel(
             date_diagnosed=arrow.get(data['date_diagnosed']).timestamp,
             date_cured=arrow.get(data['date_cured']).timestamp,
@@ -61,8 +67,6 @@ class Mastitis(Resource):
             cow_id=data['cow_id']
 
         )
-        print(data['cow_id'])
-        print(mastitis.json())
         try:
             mastitis.save_to_db()
         except Exception as e:

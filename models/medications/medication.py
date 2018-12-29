@@ -6,8 +6,9 @@ class MedicationModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     medicine_name = db.Column(db.String(20))
-    date_started = db.Column(db.DateTime(timezone=True))
-    date_stopped = db.Column(db.DateTime(timezone=True))
+    date_started = db.Column(db.BigInteger)
+    date_stopped = db.Column(db.BigInteger)
+    # TODO: change DateTime to BigINT
     medication_type = db.Column(db.String(32), nullable=False)
     __mapper_args = {'polymorphic_on': medication_type}
 

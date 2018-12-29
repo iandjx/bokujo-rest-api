@@ -7,13 +7,10 @@ from resources.cow import Cow, CowList
 from resources.mastitis import Mastitis
 # from resources.mastitis_medications import MastitisMedication
 from resources.user import UserRegister, User, UserLogin
-# from resources.test import Test
-# from resources.inherit import Inherit
-# from resources.problem import Problem
+
 
 app = Flask(__name__)
 # Get database URL from Heroku if available else use sqlite
-# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://localhost')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -24,16 +21,15 @@ api = Api(app)
 jwt = JWTManager(app)
 
 
-api.add_resource(Cow, '/cow/<string:private_id>')
+api.add_resource(Cow, '/cow/<string:pub_id>')
 api.add_resource(CowList, '/cows')
 # api.add_resource(MastitisMedication, '/cow/mastitis/medication/<int:_id>')
-api.add_resource(Mastitis, '/cow/mastitis/<int:_id>')
+api.add_resource(Mastitis, '/cow/mastitis/<string:pub_id>')
+# TODO: mastitis should take pub_id
 api.add_resource(UserRegister, '/register')
 api.add_resource(User, '/user/<int:user_id>')
 api.add_resource(UserLogin, '/login')
-# api.add_resource(Test, '/test/<string:name>')
-# api.add_resource(Inherit, '/inherit/<string:name>')
-# api.add_resource(Problem, '/cow/problem/<int:_id>')
+
 
 # @app.before_first_request
 # def create_tables():
