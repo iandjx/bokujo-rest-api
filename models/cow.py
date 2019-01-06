@@ -5,7 +5,7 @@ class CowModel(db.Model):
     __tablename__ = "cows"
 
     id = db.Column(db.Integer, primary_key=True)
-    pub_id = db.Column(db.String(20))
+    pub_id = db.Column(db.String(20), unique=True)
     private_id = db.Column(db.String(10))
     current_pen = db.Column(db.String)
     mother_id = db.Column(db.Integer)
