@@ -5,7 +5,7 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from resources.cow import Cow, CowList
 from resources.mastitis import Mastitis
-# from resources.mastitis_medications import MastitisMedication
+from resources.mastitis_medications import MastitisMedication
 from resources.user import UserRegister, User, UserLogin
 
 
@@ -23,7 +23,7 @@ jwt = JWTManager(app)
 
 api.add_resource(Cow, '/cow/<string:pub_id>')
 api.add_resource(CowList, '/cows')
-# api.add_resource(MastitisMedication, '/cow/mastitis/medication/<int:_id>')
+api.add_resource(MastitisMedication, '/cow/mastitis/medication/<int:mastitis_id>')
 api.add_resource(Mastitis, '/cow/mastitis/<string:pub_id>')
 # TODO: mastitis should take pub_id
 api.add_resource(UserRegister, '/register')

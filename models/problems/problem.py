@@ -9,23 +9,23 @@ class ProblemModel(db.Model):
     date_treated = db.Column(db.BigInteger)
     date_cured = db.Column(db.BigInteger)
     problem_type = db.Column(db.String(32), nullable=False)
-    cow_id = db.Column(db.Integer, db.ForeignKey('cows.id'))
+    pub_id = db.Column(db.String, db.ForeignKey('cows.pub_id'))
 
     __mapper_args__ = {'polymorphic_on': problem_type,
                        'polymorphic_identity': 'problem'}
 
-    def __init__(self, date_diagnosed, date_treated, date_cured, cow_id):
+    def __init__(self, date_diagnosed, date_treated, date_cured, pub_id):
         self.date_diagnosed = date_diagnosed
         self.date_treated = date_treated
         self.date_cured = date_cured
-        self.cow_id = cow_id
+        self.pub_id = pub_id
 
     def json(self):
         return {
                 'date_diagnosed': self.date_diagnosed,
                 'date_treated': self.date_treated,
                 'date_cured': self.date_cured,
-                'cow_id': self.cow_id
+                'pub_id': self.pub_id
                 }
 
     def save_to_db(self):
