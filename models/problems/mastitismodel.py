@@ -1,6 +1,6 @@
 from db import db
 from models.problems.problem import ProblemModel
-
+from sqlalchemy import and_
 
 class MastitisModel(ProblemModel):
     __tablename__ = "mastitis"
@@ -16,8 +16,8 @@ class MastitisModel(ProblemModel):
     mastitis_medications = db.relationship('MastitisMedicationModel', lazy='dynamic')
 
     def __init__(self, is_right_front_affected, is_left_front_affected, is_right_back_affected, is_left_back_affected,
-                 cow_id, date_diagnosed, date_treated, date_cured):
-        super().__init__(date_diagnosed, date_treated, date_cured, cow_id)
+                 pub_id, date_diagnosed, date_treated, date_cured):
+        super().__init__(date_diagnosed, date_treated, date_cured, pub_id)
         self.is_right_back_affected = is_right_back_affected
         self.is_left_back_affected = is_left_back_affected
         self.is_left_front_affected = is_left_front_affected
@@ -32,7 +32,7 @@ class MastitisModel(ProblemModel):
             'is_left_front_affected': self.is_left_front_affected,
             'is_right_back_affected': self.is_right_back_affected,
             'is_left_back_affected': self.is_left_back_affected,
-            'cow_id': self.cow_id
+            'pub_id': self.pub_id
         }
 
     def save_to_db(self):
@@ -44,6 +44,10 @@ class MastitisModel(ProblemModel):
         db.session.commit()
 
     @classmethod
-    def find_existing_mastitis(cls, date_cured):
-        return cls.query.filter_by(date_cured.is_(None)).first()
+    def find_existing_mastitis(cls, pub_id):
+        return cls.query.filter(and_(cls.date_cured.is_(None), pub_id == pub_id)).first()
         # TODO: change find_by_id to find for if an existing ailment exists
+
+    @classmethod
+    def find_mastitis_on_pub_id(cls, pub_id):
+        return cls.query.filter_by(pub_id=pub_id).first()
