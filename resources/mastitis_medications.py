@@ -1,6 +1,8 @@
 from models.medications.mastitis_medications import MastitisMedicationModel
 from flask_restful import Resource, reqparse
 from models.problems.mastitismodel import MastitisModel
+from datetime import datetime
+import arrow
 
 
 class MastitisMedication(Resource):
@@ -11,38 +13,43 @@ class MastitisMedication(Resource):
                         help="This field cannot be left blank."
                         )
     parser.add_argument('date_started',
-                        type=int,
+                        type=lambda x: datetime.strptime(x, '%Y-%m-%dT%H:%M:%S'),
                         required=True,
                         help="This field cannot be left blank."
                         )
     parser.add_argument('date_stopped',
-                        type=int,
+                        type=lambda x: datetime.strptime(x, '%Y-%m-%dT%H:%M:%S'),
                         required=True,
                         help="This field cannot be left blank."
                         )
-    # TODO: Change int to DateTime
-    parser.add_argument('mastitis_id',
-                        type=int,
-                        required=True,
-                        help="This field cannot be left blank")
 
-    def get(self, _id):
-        mastitis_medication = MastitisMedicationModel.find_by_id(_id)
+    # TODO: Change int to DateTime
+
+    def get(self, mastitis_id):
+        mastitis_medication = MastitisMedicationModel.find_by_id(mastitis_id)
         if mastitis_medication:
             return mastitis_medication.json()
         return {'message': 'Mastitis medication not found'}, 404
 
-    def post(self, _id):
+    def post(self, mastitis_id):
         data = MastitisMedication.parser.parse_args()
-        mastitis = MastitisModel.find_by_id(_id)
+        mastitis = MastitisModel.find_by_id(mastitis_id)
         # TODO: change to find if ailment is treated or not
         if mastitis is None:
             return {"message": "Ailment doesn't exist"}
-        mastitis_medication = MastitisMedicationModel(**data, mastitis_id=_id)
+        print(mastitis.json())
+        mastitis_medication = MastitisMedicationModel(
+            medicine_name=data['medicine_name'],
+            date_started=arrow.get(data['date_started']).timestamp,
+            date_stopped=arrow.get(data['date_stopped']).timestamp,
+            mastitis_id=mastitis_id)
+
+        print(mastitis_medication.json())
         try:
             mastitis_medication.save_to_db()
-        except:
-            return {"message": "An error occurred inserting the mastitis medication."}, 500
+        except Exception as e:
+
+            return {e}, 500
 
         return mastitis_medication.json(), 201
 
@@ -50,6 +57,3 @@ class MastitisMedication(Resource):
 class MastitisMedicationList(Resource):
     def get(self):
         return {'mastitis_medications': list(map(lambda x: x.json(), MastitisMedication.query.all()))}
-
-
-

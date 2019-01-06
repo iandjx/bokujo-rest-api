@@ -9,7 +9,7 @@ class MastitisMedicationModel(MedicationModel):
     # TODO: check proper relationship with mastitis table
 
     id = db.Column(db.Integer, db.ForeignKey('medications.id'), primary_key=True)
-    __mapper_args = {'polymorphic_identity': 'mastitis_medication'}
+    __mapper_args__ = {'polymorphic_identity': 'mastitis_medication'}
     # TODO: check proper relationship with medications table
 
     def __init__(self, medicine_name, date_started, date_stopped, mastitis_id ):
@@ -23,8 +23,8 @@ class MastitisMedicationModel(MedicationModel):
                 'mastitis_id': self.mastitis_id}
 
     @classmethod
-    def find_by_id(cls, _id):
-        return cls.query.filter_by(id=_id).first()
+    def find_by_id(cls, mastitis_id):
+        return cls.query.filter_by(mastitis_id=mastitis_id).first()
 
     def save_to_db(self):
         db.session.add(self)

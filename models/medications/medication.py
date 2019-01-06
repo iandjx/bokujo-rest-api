@@ -10,7 +10,8 @@ class MedicationModel(db.Model):
     date_stopped = db.Column(db.BigInteger)
     # TODO: change DateTime to BigINT
     medication_type = db.Column(db.String(32), nullable=False)
-    __mapper_args = {'polymorphic_on': medication_type}
+    __mapper_args__ = {'polymorphic_on': medication_type,
+                       'polymorphic_identity': 'medication'}
 
     def __init__(self, medicine_name, date_started, date_stopped):
         self.medicine_name = medicine_name
@@ -30,4 +31,3 @@ class MedicationModel(db.Model):
     def delete_from_db(self):
         db.session.delete(self)
         db.session.commit()
-
