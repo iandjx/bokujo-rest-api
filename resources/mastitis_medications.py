@@ -26,7 +26,16 @@ class MastitisMedication(Resource):
     # TODO: Change int to DateTime
 
     def get(self, mastitis_id):
-        mastitis_medication = MastitisMedicationModel.find_by_id(mastitis_id)
+        mastitis = MastitisModel.find_by_id(mastitis_id)
+        # TODO: change to find if ailment is treated or not
+        if mastitis is None:
+            return {"message": "Ailment doesn't exist"}
+        print(mastitis.json())
+        parser = reqparse.RequestParser()
+        parser.add_argument('id', type=int, location='args')
+        data = parser.parse_args()
+        _id = data['id']
+        mastitis_medication = MastitisMedicationModel.find_by_id(_id)
         if mastitis_medication:
             return mastitis_medication.json()
         return {'message': 'Mastitis medication not found'}, 404

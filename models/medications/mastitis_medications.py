@@ -23,7 +23,7 @@ class MastitisMedicationModel(MedicationModel):
                 'mastitis_id': self.mastitis_id}
 
     @classmethod
-    def find_by_id(cls, mastitis_id):
+    def find_by_mastitis_id(cls, mastitis_id, ):
         return cls.query.filter_by(mastitis_id=mastitis_id).first()
 
     def save_to_db(self):
