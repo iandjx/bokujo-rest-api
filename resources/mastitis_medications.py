@@ -62,7 +62,30 @@ class MastitisMedication(Resource):
 
         return mastitis_medication.json(), 201
 
+    def put(self, mastitis_id):
+        data = MastitisMedication.parser.parse_args()
 
+        parser = reqparse.RequestParser()
+        parser.add_argument('id', type=int, location='args')
+        data_id = parser.parse_args()
+        _id = data_id['id']
+        mastitis_medication = MastitisMedicationModel.find_by_id(_id)
+
+        if mastitis_medication:
+            mastitis_medication.medicine_name=data['medicine_name'],
+            mastitis_medication.date_started=arrow.get(data['date_started']).timestamp,
+            mastitis_medication.date_stopped=arrow.get(data['date_stopped']).timestamp,
+            mastitis_medication.mastitis_id=mastitis_id
+        else:
+            mastitis_medication = MastitisMedicationModel(
+                medicine_name=data['medicine_name'],
+                date_started=arrow.get(data['date_started']).timestamp,
+                date_stopped=arrow.get(data['date_stopped']).timestamp,
+                mastitis_id=mastitis_id)
+
+        mastitis_medication.save_to_db()
+
+        return mastitis_medication.json()
 class MastitisMedicationList(Resource):
     def get(self):
         return {'mastitis_medications': list(map(lambda x: x.json(), MastitisMedication.query.all()))}

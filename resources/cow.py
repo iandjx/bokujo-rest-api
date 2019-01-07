@@ -41,6 +41,23 @@ class Cow(Resource):
             return {"message": "An error occurred inserting the cow."}, 500
         return cow.json(), 201
 
+    def put(self, pub_id):
+        data = Cow.parser.parse_args()
+
+        cow = CowModel.find_by_pub_id(pub_id)
+        if cow:
+            cow.private_id = data['private_id']
+            cow.current_pen = data['current_pen']
+            cow.mother_id = data['mother_id']
+        else:
+            cow = CowModel(private_id=data['private_id'],
+                           pub_id=pub_id,
+                           current_pen=data['current_pen'],
+                           mother_id=data['mother_id']
+                           )
+        cow.save_to_db()
+
+        return cow.json()
 
 class CowList(Resource):
     def get(self):
