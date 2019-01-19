@@ -67,3 +67,6 @@ ENV/
 .idea/
 
 \.DS_Store
+
+# migrations
+migrations/
